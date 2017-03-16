@@ -14,8 +14,11 @@ import android.widget.RadioGroup;
 import java.util.Calendar;
 import java.util.Date;
 
+import vn.hust.soict.lung_function.config.AppConstant;
+import vn.hust.soict.lung_function.data.RealmDB;
 import vn.hust.soict.lung_function.model.Profile;
 import vn.hust.soict.lung_function.utils.FontUtils;
+import vn.hust.soict.lung_function.utils.MSharedPreferences;
 import vn.hust.soict.lung_function.utils.Prompt;
 
 public class AddPatientActivity extends BaseActivity {
@@ -31,6 +34,7 @@ public class AddPatientActivity extends BaseActivity {
     private RadioGroup mSmoking;
 
     private Profile mProfile;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,9 +115,10 @@ public class AddPatientActivity extends BaseActivity {
 
     private void addPatient() {
         String strTmp = mFullName.getText().toString();
-
+        int intTmp;
         if (strTmp.equals("")) {
             Prompt.show(mContext, R.string.msg_input_name);
+            getFocus(mFullName);
             return;
         }
 
@@ -134,7 +139,27 @@ public class AddPatientActivity extends BaseActivity {
                 return;
         }
 
-        
+        strTmp = mWeight.getText().toString();
+
+        if (strTmp.equals("")) {
+            Prompt.show(mContext, R.string.msg_input_weight);
+            getFocus(mWeight);
+            return;
+        }
+        intTmp = Integer.parseInt(strTmp);
+
+        mProfile.setWeight(intTmp);
+
+        strTmp = mHeight.getText().toString();
+
+        if (strTmp.equals("")) {
+            Prompt.show(mContext, R.string.msg_input_height);
+            getFocus(mHeight);
+            return;
+        }
+        intTmp = Integer.parseInt(strTmp);
+
+        mProfile.setHeight(intTmp);
 
         switch (mRegion.getCheckedRadioButtonId()) {
             case R.id.rbRegionNorthen:
@@ -152,13 +177,32 @@ public class AddPatientActivity extends BaseActivity {
         }
 
 
-        Prompt.show(mContext, "Hello, World!\n" + birthday);
+        switch (mSmoking.getCheckedRadioButtonId()) {
+            case R.id.rbSmokingYes:
+                mProfile.setSmoking(true);
+                break;
+            case R.id.rbSmokingNo:
+                mProfile.setSmoking(false);
+                break;
+            default:
+                Prompt.show(mContext, R.string.msg_input_smoking);
+                return;
+        }
+
+        MSharedPreferences.getInstance(mContext).putString(AppConstant.KEY_ID_PATIENT_SELECTED, mProfile.getID());
+
+        RealmDB realmDB = new RealmDB();
+        realmDB.updateProfile(mProfile);
+        realmDB.close();
+
+        finish();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.add_patient_menu, menu);
+
         return true;
     }
 

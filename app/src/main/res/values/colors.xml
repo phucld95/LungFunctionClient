@@ -4,11 +4,17 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="colorBackground">#f7f7f7</color>
+    <color name="tintIcon">#0d47a1</color>
+    <color name="White">#FFFFFF</color>
+
     <color name="colorTextAccent">#303F9F</color>
 
     <color name="separation">#727272</color>
     <color name="background_dialog_outsite">#55bcbcbc</color>
     <color name="background_dialog_insite">#ffffff</color>
+    <color name="background_item_patient">#82b1ff</color>
+    <color name="background_item_patient_gray">#bdbdbd</color>
 
     <color name="text_content">#272727</color>
     <color name="text_content_hint">#001bc7</color>
@@ -26,5 +32,9 @@
     <!-- Add Patient Activity -->
     <color name="add_patient_text_hint">#303F9F</color>
     <color name="add_patient_text">#272727</color>
+
+    <color name="dialog_title">#272727</color>
+    <color name="item_patient_text">#272727</color>
+    <color name="item_patient_description">#666666</color>
 
 </resources>

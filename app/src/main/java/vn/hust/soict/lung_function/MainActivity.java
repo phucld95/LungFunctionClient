@@ -7,24 +7,28 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
+import vn.hust.soict.lung_function.adapter.PatientAdapter;
 import vn.hust.soict.lung_function.config.AppConstant;
 import vn.hust.soict.lung_function.data.AppData;
+import vn.hust.soict.lung_function.data.RealmDB;
 import vn.hust.soict.lung_function.file.TempFile;
 import vn.hust.soict.lung_function.file.WavFile;
 import vn.hust.soict.lung_function.model.LungFunction;
@@ -32,12 +36,19 @@ import vn.hust.soict.lung_function.model.Profile;
 import vn.hust.soict.lung_function.net.RestRequest;
 import vn.hust.soict.lung_function.net.WebGlobal;
 import vn.hust.soict.lung_function.utils.FontUtils;
+import vn.hust.soict.lung_function.utils.MSharedPreferences;
 import vn.hust.soict.lung_function.utils.Prompt;
 
 public class MainActivity extends BaseActivity {
 
     private Dialog mProgressRecording;
     private TextView mDialogMessage;
+
+
+    private Dialog mDialogSelectPatient;
+
+
+    private RealmDB mRealmDB;
 
     private Button btnLungFunction;
     private EditText edFullName;
@@ -49,6 +60,7 @@ public class MainActivity extends BaseActivity {
     private EditText edSmoking;
 
     private Profile mProfile;
+    private String mProfileId;
 
     private Handler mHandler;
 
@@ -64,6 +76,9 @@ public class MainActivity extends BaseActivity {
     private RestRequest mRestRequest;
 
 
+    private MenuItem menuActionSelectPatient;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,10 +87,46 @@ public class MainActivity extends BaseActivity {
 
         initContext();
         initView();
-        initData();
-        updateUIProfile();
+//        initData();
 
         initController();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mProfile == null) {
+            mProfileId = MSharedPreferences.getInstance(mContext).getString(AppConstant.KEY_ID_PATIENT_SELECTED, "");
+            if (mProfileId.equals("")) {
+                // show viewAdd
+                findViewById(R.id.layoutAddPatient).setVisibility(View.VISIBLE);
+                if (menuActionSelectPatient != null) {
+                    menuActionSelectPatient.setVisible(false);
+                }
+            } else {
+                findViewById(R.id.layoutAddPatient).setVisibility(View.GONE);
+                if (menuActionSelectPatient != null) {
+                    menuActionSelectPatient.setVisible(true);
+                }
+                mProfile = new RealmDB().getProfile(mProfileId);
+                if (mProfile != null) {
+                    updateUIProfile();
+                } else {
+                    showDialogSelectPatient();
+                }
+            }
+        } else {
+            String id = MSharedPreferences.getInstance(mContext).getString(AppConstant.KEY_ID_PATIENT_SELECTED, "");
+            if (!mProfileId.equals(id)) {
+                mProfileId = id;
+                mProfile = new RealmDB().getProfile(mProfileId);
+                if (mProfile != null) {
+                    updateUIProfile();
+                } else {
+                    showDialogSelectPatient();
+                }
+            }
+        }
     }
 
     private void record() {
@@ -181,13 +232,24 @@ public class MainActivity extends BaseActivity {
         }
         mHandler = new Handler();
         mRestRequest = new RestRequest();
+        mRealmDB = new RealmDB();
     }
 
     protected void initController() {
         btnLungFunction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mProfile == null) {
+                    Prompt.show(mContext, R.string.msg_text_request_add_patient);
+                }
                 record();
+            }
+        });
+        findViewById(R.id.ivAddPatient).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, AddPatientActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -255,20 +317,90 @@ public class MainActivity extends BaseActivity {
         FontUtils.setFont(findViewById(R.id.inputRegion));
         FontUtils.setFont(findViewById(R.id.inputSmoking));
 
+        FontUtils.setFont(findViewById(R.id.tvAddPatient), FontUtils.TYPE_NORMAL);
+
         FontUtils.setFont(btnLungFunction, FontUtils.TYPE_NORMAL);
     }
 
 
     private void showDialogSelectPatient() {
-        Intent intent = new Intent(mContext, AddPatientActivity.class);
-        startActivity(intent);
+        if (mDialogSelectPatient != null) {
+            mDialogSelectPatient.dismiss();
+        }
+
+        mDialogSelectPatient = new Dialog(this, android.R.style.Theme_Translucent);
+        mDialogSelectPatient.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialogSelectPatient.setContentView(R.layout.dialog_list_patient);
+        mDialogSelectPatient.setCancelable(true);
+        mDialogSelectPatient.setCanceledOnTouchOutside(true);
+        mDialogSelectPatient.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        FontUtils.setFont(mDialogSelectPatient.findViewById(R.id.title), FontUtils.TYPE_NORMAL);
+        FontUtils.setFont(mDialogSelectPatient.findViewById(R.id.textPatient));
+
+        RecyclerView recyclerView = (RecyclerView) mDialogSelectPatient.findViewById(R.id.rvPatient);
+
+        final List<Profile> profiles = mRealmDB.getProfiles();
+
+        PatientAdapter.OnClickItemListener itemPatientListener = new PatientAdapter.OnClickItemListener() {
+            @Override
+            public void onClick(int position) {
+                mDialogSelectPatient.dismiss();
+                mProfile = profiles.get(position);
+                if (menuActionSelectPatient != null) {
+                    menuActionSelectPatient.setVisible(true);
+                }
+                if (mProfile != null)
+                    MSharedPreferences.getInstance(mContext).putString(AppConstant.KEY_ID_PATIENT_SELECTED, mProfile.getID());
+                updateUIProfile();
+            }
+        };
+        PatientAdapter patientAdapter = new PatientAdapter(mContext, profiles, itemPatientListener);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(patientAdapter);
+
+
+        mDialogSelectPatient.findViewById(R.id.addPatient).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialogSelectPatient.dismiss();
+                Intent intent = new Intent(mContext, AddPatientActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mDialogSelectPatient.findViewById(R.id.rootView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialogSelectPatient.dismiss();
+            }
+        });
+
+        mDialogSelectPatient.show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        menuActionSelectPatient = menu.findItem(R.id.selectPatient);
+        if (menuActionSelectPatient != null) {
+            if (mProfile == null) {
+                menuActionSelectPatient.setVisible(false);
+            } else {
+                menuActionSelectPatient.setVisible(true);
+            }
+        }
         return true;
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        mRealmDB.close();
     }
 
     @Override

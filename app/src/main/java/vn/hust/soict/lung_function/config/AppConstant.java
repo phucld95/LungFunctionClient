@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 public class AppConstant {
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
+    public static final String KEY_ID_PATIENT_SELECTED = "KEY_ID_PATIENT_SELECTED";
+
 //    public static final int TIME_RECORD_DEFAULT = 4;
     public static final int TIME_RECORD_DEFAULT = 4000;
 

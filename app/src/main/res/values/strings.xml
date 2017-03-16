@@ -2,10 +2,14 @@
     <string name="app_name">Lung Function</string>
 
     <string name="lung_function_title_activity">Chức năng phổi</string>
-    <string name="add_patient_title_activity">Thêm người bệnh</string>
+    <string name="add_patient_title_activity">Thêm người đo</string>
 
     <string name="action_add">Thêm</string>
-    <string name="action_select">Chọn người</string>
+    <string name="action_select">Chọn người đo</string>
+
+    <string name="dialog_select_patient">Chọn người đo</string>
+
+    <string name="msg_text_request_add_patient">Vui lòng cung cấp thông tin \ntrước khi đo \n\"Chức năng phổi\"</string>
 
     <string name="hint_fullname">Họ và tên</string>
     <string name="hint_birthday">Ngày sinh</string>
@@ -34,6 +38,7 @@
     <string name="text_label_volume">Volume (L)</string>
 
     <!-- Add Patient -->
+    <string name="text_add_patient">Thêm người đo</string>
     <string name="msg_input_name">Vui lòng nhập họ và tên</string>
     <string name="msg_input_height">Vui lòng nhập chiều cao</string>
     <string name="msg_input_weight">Vui lòng nhập cân nặng</string>

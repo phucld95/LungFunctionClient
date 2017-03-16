@@ -3,12 +3,26 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="dialog_margin">24dp</dimen>
+    <dimen name="dialog_margin_bottom">8dp</dimen>
+    <dimen name="dialog_title_margin">20dp</dimen>
+    <dimen name="dialog_item_height">56dp</dimen>
+    <dimen name="dialog_item_margin_lelf">80dp</dimen>
+    <dimen name="dialog_item_icon_size">36dp</dimen>
+    <dimen name="dialog_item_icon_corner">18dp</dimen>
+
+    <dimen name="text_request_add_patient">19sp</dimen>
+    <dimen name="icon_request_add_patient">72dp</dimen>
+
+
     <dimen name="item_height">48dp</dimen>
     <dimen name="item_margin_top">8dp</dimen>
     <dimen name="button_height">48dp</dimen>
     <dimen name="button_text_size">19sp</dimen>
     <dimen name="content_text_size">16sp</dimen>
 
+    <dimen name="dialog_title_text">20dp</dimen>
+    <dimen name="dialog_item_text_size">16sp</dimen>
     <dimen name="dialog_text_size">19sp</dimen>
 
     <!-- LungFunctionActivity -->

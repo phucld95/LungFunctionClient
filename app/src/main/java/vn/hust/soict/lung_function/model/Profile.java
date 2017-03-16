@@ -1,5 +1,9 @@
 package vn.hust.soict.lung_function.model;
 
+import android.util.Base64;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -20,6 +24,60 @@ public class Profile {
     private int height;
     private int region;
     private boolean isSmoking;
+
+    public Profile() {
+
+    }
+
+    public Profile(RealmProfile realmProfile) {
+        name = realmProfile.getName();
+        isMale = realmProfile.isMale();
+        birthDay = realmProfile.getBirthDay();
+        weight = realmProfile.getWeight();
+        height = realmProfile.getHeight();
+        region = realmProfile.getRegion();
+        isSmoking = realmProfile.isSmoking();
+    }
+
+    public void parse(RealmProfile realmProfile) {
+        name = realmProfile.getName();
+        isMale = realmProfile.isMale();
+        birthDay = realmProfile.getBirthDay();
+        weight = realmProfile.getWeight();
+        height = realmProfile.getHeight();
+        region = realmProfile.getRegion();
+        isSmoking = realmProfile.isSmoking();
+    }
+
+    public RealmProfile getRealmProfile() {
+        RealmProfile realmProfile = new RealmProfile();
+        realmProfile.setId(getID());
+        realmProfile.setName(name);
+        realmProfile.setBirthDay(birthDay);
+        realmProfile.setMale(isMale);
+        realmProfile.setHeight(height);
+        realmProfile.setWeight(weight);
+        realmProfile.setRegion(region);
+        realmProfile.setSmoking(isSmoking);
+        return realmProfile;
+    }
+
+    public String getID() {
+        String rawID = name + birthDay + isMale;
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(rawID.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            String id = Base64.encodeToString(messageDigest, Base64.DEFAULT).trim();
+
+            return id;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return rawID;
+    }
 
 
     public String getName() {
