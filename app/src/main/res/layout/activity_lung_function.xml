@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="vn.hust.soict.lung_function.LungFunctionActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/chart_height"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flow_volume" />
+
+            <LinearLayout
+                android:id="@+id/layoutPEF"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_lung_function_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvPEF"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text="PEF"
+                    android:textColor="@color/lung_function_text_content_hint"
+                    android:textSize="@dimen/item_text_size" />
+
+                <TextView
+                    android:id="@+id/tvPEFValue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:text="0.0"
+                    android:textColor="@color/lung_function_text_content"
+                    android:textSize="@dimen/item_text_size" />
+
+            </LinearLayout>
+
+            <View style="@style/separation_horizontal" />
+
+
+            <LinearLayout
+                android:id="@+id/layoutFEV1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_lung_function_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvFEV1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text="FEV1"
+                    android:textColor="@color/lung_function_text_content_hint"
+                    android:textSize="@dimen/item_text_size" />
+
+                <TextView
+                    android:id="@+id/tvFEV1Value"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:text="0.0"
+                    android:textColor="@color/lung_function_text_content"
+                    android:textSize="@dimen/item_text_size" />
+
+            </LinearLayout>
+
+            <View style="@style/separation_horizontal" />
+
+
+            <LinearLayout
+                android:id="@+id/layoutFVC"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_lung_function_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvFVC"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text="FVC"
+                    android:textColor="@color/lung_function_text_content_hint"
+                    android:textSize="@dimen/item_text_size" />
+
+                <TextView
+                    android:id="@+id/tvFVCValue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:text="0.0"
+                    android:textColor="@color/lung_function_text_content"
+                    android:textSize="@dimen/item_text_size" />
+
+            </LinearLayout>
+
+            <View style="@style/separation_horizontal" />
+
+
+            <LinearLayout
+                android:id="@+id/layoutFEV1divFVC"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_lung_function_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvFEV1divFVC"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text="FEV1/FVC"
+                    android:textColor="@color/lung_function_text_content_hint"
+                    android:textSize="@dimen/item_text_size" />
+
+                <TextView
+                    android:id="@+id/tvFEV1divFVCValue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:text="0.0"
+                    android:textColor="@color/lung_function_text_content"
+                    android:textSize="@dimen/item_text_size" />
+
+            </LinearLayout>
+
+            <View style="@style/separation_horizontal" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

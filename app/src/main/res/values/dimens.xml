@@ -1,0 +1,18 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="item_height">48dp</dimen>
+    <dimen name="item_margin_top">8dp</dimen>
+    <dimen name="button_height">48dp</dimen>
+    <dimen name="button_text_size">19sp</dimen>
+    <dimen name="content_text_size">16sp</dimen>
+
+    <dimen name="dialog_text_size">19sp</dimen>
+
+    <!-- LungFunctionActivity -->
+    <dimen name="chart_height">200dp</dimen>
+    <dimen name="item_lung_function_height">48dp</dimen>
+    <dimen name="item_text_size">16sp</dimen>
+</resources>

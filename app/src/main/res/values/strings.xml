@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Lung Function</string>
+
+    <string name="hint_fullname">Họ và tên</string>
+    <string name="hint_birthday">Ngày sinh</string>
+    <string name="hint_weight">Cân nặng (kg)</string>
+    <string name="hint_height">Chiều cao (cm)</string>
+    <string name="hint_gender">Giới tính</string>
+    <string name="hint_region">Vùng miền</string>
+    <string name="hint_smoking">Tình trạng hút thuốc</string>
+
+    <string name="gender_male">Nam</string>
+    <string name="gender_female">Nữ</string>
+    <string name="region_northen">Miền Bắc</string>
+    <string name="region_central">Miền Trung</string>
+    <string name="region_south">Miền Nam</string>
+    <string name="smoking_yes">Có hút thuốc</string>
+    <string name="smoking_no">Không hút thuốc</string>
+
+    <string name="button_lung_function">Đo chức năng phổi</string>
+
+    <string name="msg_temp_file_null_point">Đối tượng TempFile chưa được khởi tạo</string>
+    <string name="msg_file_no_found_exception">Không thể mở File</string>
+    <string name="msg_file_io_exception">Có lỗi trong quá trình xử lý File</string>
+    <string name="msg_no_found_lung_function_exception">Không có kết quả \"Chức năng phổi\"</string>
+</resources>
