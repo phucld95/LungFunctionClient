@@ -15,69 +15,77 @@ import vn.hust.soict.lung_function.net.RestRequest;
  * Created by tulc on 15/03/2017.
  */
 public class LungFunction {
-    private double mPEF;
-    private double mFEV1;
-    private double mFVC;
-    private double mDeltaVolume;
-    private List<Double> mFlowVolume;
+    private float mPEF;
+    private float mFEV1;
+    private float mFVC;
+    private List<Float> mFlow;
+    private List<Float> mVolume;
 
     public LungFunction() {
-        mFlowVolume = new ArrayList<>();
+        mFlow = new ArrayList<>();
+        mVolume = new ArrayList<>();
     }
 
-    public double getPEF() {
+    public float getPEF() {
         return mPEF;
     }
 
-    public void setPEF(double mPEF) {
+    public void setPEF(float mPEF) {
         this.mPEF = mPEF;
     }
 
-    public double getFEV1() {
+    public float getFEV1() {
         return mFEV1;
     }
 
-    public void setFEV1(double mFEV1) {
+    public void setFEV1(float mFEV1) {
         this.mFEV1 = mFEV1;
     }
 
-    public double getFVC() {
+    public float getFVC() {
         return mFVC;
     }
 
-    public void setFVC(double mFVC) {
+    public void setFVC(float mFVC) {
         this.mFVC = mFVC;
     }
 
-    public double getDeltaVolume() {
-        return mDeltaVolume;
+    public List<Float> getVolume() {
+        return mVolume;
     }
 
-    public void setDeltaVolume(float mDeltaVolume) {
-        this.mDeltaVolume = mDeltaVolume;
+    public void setVolume(List<Float> mVolume) {
+        this.mVolume = mVolume;
     }
 
-    public List<Double> getFlowVolume() {
-        return mFlowVolume;
+    public List<Float> getFlow() {
+        return mFlow;
     }
 
-    public void setFlowVolume(List<Double> mFlowVolume) {
-        this.mFlowVolume = mFlowVolume;
+    public void setFlow(List<Float> mFlow) {
+        this.mFlow = mFlow;
     }
 
     public void parse(JSONObject jsonObject) {
         try {
-            Log.e(">>>>", jsonObject.toString());
             mPEF = (float) jsonObject.getDouble("PEF");
             mFEV1 = (float) jsonObject.getDouble("FEV1");
             mFVC = (float) jsonObject.getDouble("FVC");
-            mDeltaVolume = (float) jsonObject.getDouble("DeltaVolume");
-            JSONArray data = jsonObject.getJSONArray("FlowVolume");
+//            mDeltaVolume = (float) jsonObject.getDouble("DeltaVolume");
+            JSONArray data = jsonObject.getJSONArray("Flow");
 
             if (data == null || data.length() == 0) return;
 
             for (int i = 0; i < data.length(); i++) {
-                mFlowVolume.add(data.getDouble(i));
+                mFlow.add((float) data.getDouble(i));
+            }
+
+            data = jsonObject.getJSONArray("Volume");
+
+            if (data == null || data.length() == 0) return;
+
+            for (int i = 0; i < data.length(); i++) {
+                mVolume.add((float) data.getDouble(i));
             }
 
         } catch (JSONException e) {

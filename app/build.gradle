@@ -40,4 +40,5 @@ dependencies {
     compile 'com.android.support:design:24.0.0'
 
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
 }

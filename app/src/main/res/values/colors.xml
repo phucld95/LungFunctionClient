@@ -20,5 +20,7 @@
     <!-- LungFunctionActivity -->
     <color name="lung_function_text_content">#ff0000</color>
     <color name="lung_function_text_content_hint">#001bc7</color>
+    <color name="chart_label_text">#001bc7</color>
+    <color name="chart_label_line">#e24c01</color>
 
 </resources>

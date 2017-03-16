@@ -23,4 +23,7 @@
     <string name="msg_file_no_found_exception">Không thể mở File</string>
     <string name="msg_file_io_exception">Có lỗi trong quá trình xử lý File</string>
     <string name="msg_no_found_lung_function_exception">Không có kết quả \"Chức năng phổi\"</string>
+
+    <string name="text_label_flow">Flow (L/s)"</string>
+    <string name="text_label_volume">Volume (L)"</string>
 </resources>

@@ -1,12 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" >
-
-    <item
-        jar="/home/tulc/IoT/Projects/Lung_Function/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        revision="24.0.2"
-        sha1="888b874cdfc94bd57c5427a0bbc681f88fa8796e">
-        <dex dex="/home/tulc/IoT/Projects/Lung_Function/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_cb99ec0d3847ee4220c17b4a5585ed3b12187bd3.jar" />
-    </item>
-
-</items>
+<items version="2" />

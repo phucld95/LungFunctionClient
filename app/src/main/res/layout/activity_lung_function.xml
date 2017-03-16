@@ -19,11 +19,42 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin">
 
-            <ImageView
+            <RelativeLayout
+                android:id="@+id/layoutChart"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/chart_height"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flow_volume" />
+                android:layout_height="@dimen/chart_height">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chartFlowVolume"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/chart_label_height"
+                    android:layout_marginLeft="@dimen/chart_label_height">
+
+                </com.github.mikephil.charting.charts.LineChart>
+
+                <TextView
+                    android:id="@+id/tvFlowLable"
+                    android:layout_width="@dimen/chart_height"
+                    android:layout_height="@dimen/chart_height"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center_horizontal|top"
+                    android:rotation="-90"
+                    android:text="@string/text_label_flow"
+                    android:textColor="@color/chart_label_text"
+                    android:textSize="@dimen/chart_label_size" />
+
+                <TextView
+                    android:id="@+id/tvVolumeLable"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/chart_height"
+                    android:gravity="center_horizontal|bottom"
+                    android:text="@string/text_label_volume"
+                    android:textColor="@color/chart_label_text"
+                    android:textSize="@dimen/chart_label_size" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/layoutPEF"

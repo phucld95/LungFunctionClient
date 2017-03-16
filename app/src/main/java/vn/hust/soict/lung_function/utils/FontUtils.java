@@ -118,6 +118,20 @@ public class FontUtils {
         }
     }
 
+    public static Typeface getTypeface() {
+        return sTypeface;
+    }
+
+    public static Typeface getTypeface(int type) {
+        Typeface sTypefaces = sTypeface;
+        if (type == TYPE_LIGHT) {
+            sTypefaces = sTypeface;
+        } else if (type == TYPE_NORMAL) {
+            sTypefaces = sTypefaceNomarl;
+        }
+        return sTypefaces;
+    }
+
     /**
      * Load font from res/raw
      * <p/>
