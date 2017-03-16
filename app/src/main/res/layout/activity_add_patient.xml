@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_patient"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="vn.hust.soict.lung_function.AddPatientActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+
+            <LinearLayout
+                android:id="@+id/layoutFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvFullNameHint"
+                    style="@style/add_patient_item_hint"
+                    android:text="@string/hint_fullname" />
+
+                <EditText
+                    android:id="@+id/edFullName"
+                    style="@style/add_patient_item"
+                    android:layout_height="@dimen/add_patient_item"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+                <View style="@style/separation_horizontal" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutBirthDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvBirthDayHint"
+                    style="@style/add_patient_item_hint"
+                    android:text="@string/hint_birthday" />
+
+                <DatePicker
+                    android:id="@+id/datePickerBirthDay"
+                    style="@style/datePickerTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></DatePicker>
+
+                <View style="@style/separation_horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvGenderHint"
+                    style="@style/add_patient_item_hint"
+                    android:text="@string/hint_birthday" />
+
+                <RadioGroup
+                    android:id="@+id/rgGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/add_patient_item"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbMale"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/gender_male"
+                        android:textColor="@color/add_patient_text"
+                        android:textSize="@dimen/add_patient_text" />
+
+                    <RadioButton
+                        android:id="@+id/rbFemale"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/gender_female"
+                        android:textColor="@color/add_patient_text"
+                        android:textSize="@dimen/add_patient_text" />
+                </RadioGroup>
+
+                <View style="@style/separation_horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvWeightHint"
+                    style="@style/add_patient_item_hint"
+                    android:text="@string/hint_weight" />
+
+                <EditText
+                    android:id="@+id/edWeight"
+                    style="@style/add_patient_item"
+                    android:layout_height="@dimen/add_patient_item"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberSigned"
+                    android:maxLength="3"
+                    android:maxLines="1" />
+
+                <View style="@style/separation_horizontal" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutHeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvHeightHint"
+                    style="@style/add_patient_item_hint"
+                    android:text="@string/hint_height" />
+
+                <EditText
+                    android:id="@+id/edHeight"
+                    style="@style/add_patient_item"
+                    android:layout_height="@dimen/add_patient_item"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned"
+                    android:maxLength="3"
+                    android:maxLines="1" />
+
+                <View style="@style/separation_horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutRegion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvRegionHint"
+                    style="@style/add_patient_item_hint"
+                    android:text="@string/hint_region" />
+
+                <RadioGroup
+                    android:id="@+id/rgRegion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rbRegionNorthen"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_patient_item"
+                        android:gravity="center_vertical"
+                        android:text="@string/region_northen"
+                        android:textColor="@color/add_patient_text"
+                        android:textSize="@dimen/add_patient_text" />
+
+                    <RadioButton
+                        android:id="@+id/rbRegionCentral"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_patient_item"
+                        android:gravity="center_vertical"
+                        android:text="@string/region_central"
+                        android:textColor="@color/add_patient_text"
+                        android:textSize="@dimen/add_patient_text" />
+
+                    <RadioButton
+                        android:id="@+id/rbRegionSouth"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_patient_item"
+                        android:gravity="center_vertical"
+                        android:text="@string/region_south"
+                        android:textColor="@color/add_patient_text"
+                        android:textSize="@dimen/add_patient_text" />
+
+                </RadioGroup>
+
+                <View style="@style/separation_horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutSmoking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvSmokingHint"
+                    style="@style/add_patient_item_hint"
+                    android:text="@string/hint_smoking" />
+
+                <RadioGroup
+                    android:id="@+id/rgSmoking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rbSmokingYes"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_patient_item"
+                        android:gravity="center_vertical"
+                        android:text="@string/smoking_yes"
+                        android:textColor="@color/add_patient_text"
+                        android:textSize="@dimen/add_patient_text" />
+
+                    <RadioButton
+                        android:id="@+id/rbSmokingNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_patient_item"
+                        android:gravity="center_vertical"
+                        android:text="@string/smoking_no"
+                        android:textColor="@color/add_patient_text"
+                        android:textSize="@dimen/add_patient_text" />
+                </RadioGroup>
+
+                <View style="@style/separation_horizontal" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

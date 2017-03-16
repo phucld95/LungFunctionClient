@@ -23,4 +23,8 @@
     <color name="chart_label_text">#001bc7</color>
     <color name="chart_label_line">#e24c01</color>
 
+    <!-- Add Patient Activity -->
+    <color name="add_patient_text_hint">#303F9F</color>
+    <color name="add_patient_text">#272727</color>
+
 </resources>

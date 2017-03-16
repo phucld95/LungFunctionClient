@@ -18,4 +18,9 @@
 
     <dimen name="chart_label_size">13sp</dimen>
     <dimen name="chart_label_height">20dp</dimen>
+
+    <!-- Add Patient Activity -->
+    <dimen name="add_patient_text_hint">13sp</dimen>
+    <dimen name="add_patient_text">19sp</dimen>
+    <dimen name="add_patient_item">32dp</dimen>
 </resources>

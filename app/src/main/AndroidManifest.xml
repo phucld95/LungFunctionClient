@@ -15,6 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +23,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LungFunctionActivity"></activity>
+        <activity
+            android:name=".LungFunctionActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:label="@string/lung_function_title_activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddPatientActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:label="@string/add_patient_title_activity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
