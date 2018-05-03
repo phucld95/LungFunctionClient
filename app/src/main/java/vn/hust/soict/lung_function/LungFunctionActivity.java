@@ -2,6 +2,7 @@ package vn.hust.soict.lung_function;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -42,6 +43,9 @@ public class LungFunctionActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lung_function);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         initContext();
         initView();
@@ -165,4 +169,12 @@ public class LungFunctionActivity extends BaseActivity {
         mChart.invalidate();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else
+            return super.onOptionsItemSelected(item);
+    }
 }

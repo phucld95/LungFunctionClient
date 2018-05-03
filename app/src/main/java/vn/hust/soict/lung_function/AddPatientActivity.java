@@ -1,18 +1,15 @@
 package vn.hust.soict.lung_function;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import vn.hust.soict.lung_function.config.AppConstant;
 import vn.hust.soict.lung_function.data.RealmDB;
@@ -40,6 +37,9 @@ public class AddPatientActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_patient);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         initContext();
 
@@ -211,6 +211,9 @@ public class AddPatientActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.addPatient:
                 addPatient();
+                return true;
+            case android.R.id.home:
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

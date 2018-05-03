@@ -12,6 +12,8 @@ public class AppConstant {
 
     public static final String KEY_ID_PATIENT_SELECTED = "KEY_ID_PATIENT_SELECTED";
 
+    public static final String KEY_SERVER_URL = "KEY_SERVER_URL";
+
 //    public static final int TIME_RECORD_DEFAULT = 4;
     public static final int TIME_RECORD_DEFAULT = 4000;
 

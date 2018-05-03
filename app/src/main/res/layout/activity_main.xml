@@ -207,4 +207,16 @@
 
     </LinearLayout>
 
+
+    <ImageView
+        android:alpha="0.0"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/ivSetUrl"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_settings_white"
+        android:tint="@color/tintIcon"
+        />
 </RelativeLayout>

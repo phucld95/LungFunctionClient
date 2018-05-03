@@ -1,13 +1,16 @@
 package vn.hust.soict.lung_function;
 
+import android.Manifest;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,7 +30,6 @@ import java.util.List;
 
 import vn.hust.soict.lung_function.adapter.PatientAdapter;
 import vn.hust.soict.lung_function.config.AppConstant;
-import vn.hust.soict.lung_function.data.AppData;
 import vn.hust.soict.lung_function.data.RealmDB;
 import vn.hust.soict.lung_function.file.TempFile;
 import vn.hust.soict.lung_function.file.WavFile;
@@ -89,12 +91,73 @@ public class MainActivity extends BaseActivity {
         initView();
 //        initData();
 
+
+        requestRecordAudioAccessNetworkPermission();
+
         initController();
+    }
+
+
+    private void requestRecordAudioAccessNetworkPermission() {
+        //check API version, do nothing if API version < 23!
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentapiVersion > android.os.Build.VERSION_CODES.LOLLIPOP) {
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
+
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)
+                        || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                        || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_NETWORK_STATE)) {
+
+                    // Show an expanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+
+                } else {
+
+                    // No explanation needed, we can request the permission.
+
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_NETWORK_STATE}, 1);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    Log.d("Activity", "Granted!");
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Log.d("Activity", "Denied!");
+                    finish();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        hidenKeyboard();
         if (mProfile == null) {
             mProfileId = MSharedPreferences.getInstance(mContext).getString(AppConstant.KEY_ID_PATIENT_SELECTED, "");
             if (mProfileId.equals("")) {
@@ -158,13 +221,15 @@ public class MainActivity extends BaseActivity {
 
                 while (recording) {
                     recorder.read(data, 0, bufferSize);
-                    if (mTempFile != null)
+                    if (mTempFile != null) {
                         mTempFile.write(data);
-                    else {
+                    } else {
                         Prompt.show(mContext, R.string.msg_temp_file_null_point);
                         break;
                     }
                 }
+                recorder.release();
+                recorder = null;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -187,24 +252,29 @@ public class MainActivity extends BaseActivity {
                 // Luu file wave
                 mWavFile.saveWaveFile();
 
-                mRestRequest.setHeaders(mProfile);
-
+//                mRestRequest = new RestRequest();
+                mRestRequest.setHeaders();
 
                 // Ket thuc ghi am
-                LungFunction lungFunction = mRestRequest.postResponse(WebGlobal.URL, mWavFile.getFileName());
-                if (lungFunction != null) {
-                    AppData.getInstance().setLungFunction(lungFunction);
-                    Intent intent = new Intent(mContext, LungFunctionActivity.class);
-                    startActivity(intent);
-                } else {
-                    Prompt.show(mContext, "LungFunction is NULL");
-                }
+                String URL = MSharedPreferences.getInstance(mContext).getString(AppConstant.KEY_SERVER_URL, WebGlobal.URL);
+                LungFunction lungFunction = mRestRequest.postResponse(URL, mWavFile.getFileName(),mProfile);
+//                LungFunction lungFunction = mRestRequest.postResponse(URL, "/storage/emulated/0/Music/RECORD.wav");
 
                 // Xoa file tam thoi
                 mTempFile.deleteFile();
                 // Xoa file wave
                 mWavFile.deleteFile();
                 mProgressRecording.dismiss();
+
+                if (lungFunction != null) {
+//                    AppData.getInstance().setLungFunction(lungFunction);
+//                    Intent intent = new Intent(mContext, LungFunctionActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+//                    MainActivity.this.finish();
+                } else {
+                    Prompt.show(mContext, "LungFunction is NULL");
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 mProgressRecording.dismiss();
@@ -236,6 +306,13 @@ public class MainActivity extends BaseActivity {
     }
 
     protected void initController() {
+        findViewById(R.id.ivSetUrl).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogSetupUrl();
+            }
+        });
+
         btnLungFunction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -245,6 +322,7 @@ public class MainActivity extends BaseActivity {
                 record();
             }
         });
+
         findViewById(R.id.ivAddPatient).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -254,7 +332,7 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    private void initData() {
+    private void initDatga() {
         mProfile = new Profile();
         mProfile.setName("LE CONG Tu");
         mProfile.setBirthDay("07/02/1994");
@@ -322,6 +400,55 @@ public class MainActivity extends BaseActivity {
         FontUtils.setFont(btnLungFunction, FontUtils.TYPE_NORMAL);
     }
 
+    private void showDialogSetupUrl() {
+        final Dialog dialog = new Dialog(this, android.R.style.Theme_Translucent);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_set_url);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        final EditText edUrl = (EditText) dialog.findViewById(R.id.edInputUrl);
+
+        edUrl.setText(MSharedPreferences.getInstance(mContext).getString(AppConstant.KEY_SERVER_URL, WebGlobal.URL));
+
+        FontUtils.setFont(dialog.findViewById(R.id.title), FontUtils.TYPE_NORMAL);
+        FontUtils.setFont(dialog.findViewById(R.id.inputUrl));
+        FontUtils.setFont(dialog.findViewById(R.id.btnCancel), FontUtils.TYPE_NORMAL);
+        FontUtils.setFont(dialog.findViewById(R.id.btnOK), FontUtils.TYPE_NORMAL);
+
+        dialog.findViewById(R.id.btnCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hidenKeyboard();
+                dialog.dismiss();
+            }
+        });
+        dialog.findViewById(R.id.rootView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hidenKeyboard();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.findViewById(R.id.btnOK).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = edUrl.getText().toString().trim();
+                if (url.equals("")) {
+                    Prompt.show(mContext, R.string.msg_input_url);
+                } else {
+                    hidenKeyboard();
+                    dialog.dismiss();
+                    MSharedPreferences.getInstance(mContext).putString(AppConstant.KEY_SERVER_URL, url);
+                }
+            }
+        });
+
+        dialog.show();
+
+    }
 
     private void showDialogSelectPatient() {
         if (mDialogSelectPatient != null) {

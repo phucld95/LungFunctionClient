@@ -34,6 +34,7 @@ public class WavFile {
 
     public boolean saveWaveFile() throws IOException {
         String filename = mContext.getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath()
+//        String filename = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Music"
                 + "/RECORD_" + (new Date().getTime()) + ".wav";
         return saveWaveFile(filename);
     }

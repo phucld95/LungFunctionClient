@@ -19,6 +19,9 @@
     <string name="hint_region">Vùng miền</string>
     <string name="hint_smoking">Tình trạng hút thuốc</string>
 
+    <string name="hint_url">Server URL</string>
+    <string name="msg_input_url">Vui lòng nhập URL</string>
+
     <string name="gender_male">Nam</string>
     <string name="gender_female">Nữ</string>
     <string name="region_northen">Miền Bắc</string>

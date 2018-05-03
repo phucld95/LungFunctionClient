@@ -2,6 +2,7 @@ package vn.hust.soict.lung_function.file;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,18 +20,23 @@ public class TempFile {
     private String mNameTempFile;
     private OutputStream mOutputStream;
 
+    private boolean isWrite = false;
+
     public TempFile(Context context) throws FileNotFoundException {
         mContext = context;
         mNameTempFile = mContext.getExternalFilesDir(Environment.DIRECTORY_MUSIC).getAbsolutePath()
                 + "/TMP_" + (new Date().getTime());
         mOutputStream = new FileOutputStream(mNameTempFile);
+        isWrite = true;
     }
 
     public void write(byte[] bytes) throws IOException {
-        mOutputStream.write(bytes, 0, bytes.length);
+        if (isWrite)
+            mOutputStream.write(bytes, 0, bytes.length);
     }
 
     public void close() throws IOException {
+        isWrite = false;
         mOutputStream.close();
     }
 
